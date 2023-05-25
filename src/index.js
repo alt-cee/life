@@ -55,7 +55,27 @@ function render(board) {
 }
 function next_board_state(board) {
     function next_cell_state(cell, neighbors) {
-        const next_state = 1;
+        const alive_neighbors = neighbors.reduce((total, v) => total + v);
+        let next_state = 0;
+        if (cell === 1) {
+            if (alive_neighbors <= 1) {
+                next_state = 0;
+            }
+            else if (alive_neighbors <= 3) {
+                next_state = 1;
+            }
+            else {
+                next_state = 0;
+            }
+        }
+        else {
+            if (alive_neighbors === 3) {
+                next_state = 1;
+            }
+            else {
+                next_state = 0;
+            }
+        }
         return next_state;
     }
     function find_neighbors(i, j, board) {
@@ -87,13 +107,14 @@ function next_board_state(board) {
             // (i, j-1), (i, j), (i, j+1)
             // (i+1, j-1), (i+1, j), (i+1, j+1)
             const cell = board[i][j];
-            next_state[i][j] = next_cell_state(cell, [0, 0, 0]);
+            next_state[i][j] = next_cell_state(cell, neighbors);
         }
     }
     return next_state;
 }
-const board = random_state(10, 10);
+const board = random_state(3, 3);
 // console.log(board);
-// render(board);
+render(board);
+console.log('-----------------');
 render(next_board_state(board));
 //# sourceMappingURL=index.js.map
