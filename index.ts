@@ -109,10 +109,20 @@ function next_board_state(board: number[][]): number[][] {
     return next_state;
 }
 
+const toad = [
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 0],
+    [0, 1, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0]
+];
+
 function main() {
-    let current_state = random_state(10, 10);
+    // let current_state = random_state(10, 10);
+    let current_state = toad;
     let iteration = 0;
-    while (iteration < 10) {
+    while (iteration < 1000) {
         render(current_state);
         current_state = next_board_state(current_state);
         iteration++;
