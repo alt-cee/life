@@ -58,12 +58,36 @@ function next_board_state(board) {
         const next_state = 1;
         return next_state;
     }
+    function find_neighbors(i, j, board) {
+        const width = board[0].length;
+        const height = board.length;
+        const neighbors = [];
+        for (let y = i - 1; y <= i + 1; y++) {
+            for (let x = j - 1; x <= j + 1; x++) {
+                if (x === j && y === i) {
+                    continue;
+                }
+                else if (x < 0 || y < 0 || x >= width || y >= height) {
+                    neighbors.push(0);
+                }
+                else {
+                    neighbors.push(board[y][x]);
+                }
+            }
+        }
+        return neighbors;
+    }
     const width = board[0].length;
     const height = board.length;
     const next_state = blank_state(width, height);
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
-            next_state[i][j] = next_cell_state(board[i][j], [0, 0, 0]);
+            const neighbors = find_neighbors(i, j, board);
+            // (i-1, j-1), (i-1, j), (i+1, j+1)
+            // (i, j-1), (i, j), (i, j+1)
+            // (i+1, j-1), (i+1, j), (i+1, j+1)
+            const cell = board[i][j];
+            next_state[i][j] = next_cell_state(cell, [0, 0, 0]);
         }
     }
     return next_state;
