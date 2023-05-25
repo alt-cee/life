@@ -109,8 +109,14 @@ function next_board_state(board: number[][]): number[][] {
     return next_state;
 }
 
-const board = random_state(3, 3);
-// console.log(board);
-render(board);
-console.log('-----------------')
-render(next_board_state(board));
+function main() {
+    let current_state = random_state(10, 10);
+    let iteration = 0;
+    while (iteration < 10) {
+        render(current_state);
+        current_state = next_board_state(current_state);
+        iteration++;
+    }
+}
+
+main();
