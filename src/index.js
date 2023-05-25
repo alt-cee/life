@@ -23,6 +23,23 @@ function random_state(width, height) {
     return board;
 }
 ;
-console.log(random_state(3, 3));
-console.log(cell_state(0.6));
+function render(board) {
+    function render_symbol(cell) {
+        if (cell === 1) {
+            return '*';
+        }
+        else {
+            return ' ';
+        }
+    }
+    const table = board.map(row => {
+        return row.map(cell => {
+            return render_symbol(cell);
+        }).join('|');
+    }).join('\n');
+    console.log(table);
+}
+const board = random_state(10, 10);
+console.log(board);
+render(board);
 //# sourceMappingURL=index.js.map
