@@ -1,4 +1,18 @@
 "use strict";
+function blank_state(width, height) {
+    const board = [];
+    for (let i = 0; i < height; i++) {
+        const row = [];
+        for (let j = 0; j < width; j++) {
+            row.push(0);
+        }
+        ;
+        board.push(row);
+    }
+    ;
+    return board;
+}
+;
 function cell_state(probability) {
     if (probability <= 0.5) {
         return 0;
@@ -39,7 +53,23 @@ function render(board) {
     }).join('\n');
     console.log(table);
 }
+function next_board_state(board) {
+    function next_cell_state(cell, neighbors) {
+        const next_state = 1;
+        return next_state;
+    }
+    const width = board[0].length;
+    const height = board.length;
+    const next_state = blank_state(width, height);
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            next_state[i][j] = next_cell_state(board[i][j], [0, 0, 0]);
+        }
+    }
+    return next_state;
+}
 const board = random_state(10, 10);
-console.log(board);
-render(board);
+// console.log(board);
+// render(board);
+render(next_board_state(board));
 //# sourceMappingURL=index.js.map
