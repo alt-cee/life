@@ -1,4 +1,23 @@
 "use strict";
+class Board {
+    // constructor
+    constructor(elements) {
+        this.elements = elements;
+    }
+    // methods
+    // get board width
+    getwidth() {
+        return this.elements[0].length;
+    }
+    // get board height
+    getheight() {
+        return this.elements.length;
+    }
+    // get board elements
+    getelements() {
+        return this.elements;
+    }
+}
 function blank_state(width, height) {
     const board = [];
     for (let i = 0; i < height; i++) {
@@ -124,11 +143,15 @@ function main() {
     // let current_state = random_state(10, 10);
     let current_state = toad;
     let iteration = 0;
-    while (iteration < 1000) {
+    while (iteration < 2) {
         render(current_state);
         current_state = next_board_state(current_state);
         iteration++;
     }
 }
 main();
+// const b = new Board([[0, 0, 0], [1, 1, 1]]);
+// console.log(b.getwidth())
+// console.log(b.getheight())
+// console.log(b.getelements())
 //# sourceMappingURL=index.js.map

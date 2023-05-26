@@ -1,3 +1,26 @@
+class Board {
+    // properties
+    private elements: number[][]
+
+    // constructor
+    constructor(elements: number[][]) {
+        this.elements = elements;
+    }
+    // methods
+    // get board width
+    public getwidth(): number {
+        return this.elements[0].length
+    }
+    // get board height
+    public getheight(): number {
+        return this.elements.length
+    }
+    // get board elements
+    public getelements(): number[][] {
+        return this.elements
+    }
+}
+
 function blank_state(width: number, height: number): number[][] {
     const board = [];
     for (let i = 0; i < height; i++) {
@@ -122,7 +145,7 @@ function main() {
     // let current_state = random_state(10, 10);
     let current_state = toad;
     let iteration = 0;
-    while (iteration < 1000) {
+    while (iteration < 2) {
         render(current_state);
         current_state = next_board_state(current_state);
         iteration++;
@@ -130,3 +153,8 @@ function main() {
 }
 
 main();
+
+// const b = new Board([[0, 0, 0], [1, 1, 1]]);
+// console.log(b.getwidth())
+// console.log(b.getheight())
+// console.log(b.getelements())
