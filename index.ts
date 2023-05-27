@@ -55,7 +55,7 @@ function random_state(width: number, height: number): number[][] {
     return board
 };
 
-function render(board: number[][]) {
+function render(board: Board) {
     function render_symbol(cell: number): string {
         if (cell === 1) {
             return '*';
@@ -64,13 +64,14 @@ function render(board: number[][]) {
             return ' '
         }
     }
-    const table = board.map(row => {
+
+    const table = board.getelements().map(row => {
         return row.map(cell => {
             return render_symbol(cell)}).join('|')}).join('\n');
-    console.log(table) 
+    console.log(table)
 }
 
-function next_board_state(board: number[][]): number[][] {
+function next_board_state(board: Board): Board {
     function next_cell_state(cell: number, neighbors: number[]): number {
         const alive_neighbors = neighbors.reduce((total, v) => total + v);
         let next_state = 0;
@@ -95,9 +96,9 @@ function next_board_state(board: number[][]): number[][] {
         }
         return next_state;
     }
-    function find_neighbors(i:number, j:number, board: number[][]): number[] {
-        const width = board[0].length;
-        const height = board.length;
+    function find_neighbors(i:number, j:number, board: Board): number[] {
+        const width = board.getwidth();
+        const height = board.getheight();
         const neighbors = [];
         for (let y = i-1; y <= i+1; y++) {
             for (let x = j-1; x<= j+1; x++) {
@@ -108,15 +109,15 @@ function next_board_state(board: number[][]): number[][] {
                     neighbors.push(0);
                 }
                 else {
-                    neighbors.push(board[y][x])
+                    neighbors.push(board.getelements()[y][x])
                 }
             }
         }
         return neighbors;
     }
 
-    const width = board[0].length;
-    const height = board.length;
+    const width = board.getwidth();
+    const height = board.getheight();
     const next_state = blank_state(width, height);
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
@@ -124,22 +125,23 @@ function next_board_state(board: number[][]): number[][] {
             // (i-1, j-1), (i-1, j), (i+1, j+1)
             // (i, j-1), (i, j), (i, j+1)
             // (i+1, j-1), (i+1, j), (i+1, j+1)
-            const cell = board[i][j];
+            const cell = board.getelements()[i][j];
             next_state[i][j] = next_cell_state(cell, neighbors)
         }
     }
 
-    return next_state;
+    return new Board(next_state);
 }
 
-const toad = [
+const toad = new Board([
     [0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0],
     [0, 0, 1, 1, 1, 0],
     [0, 1, 1, 1, 0, 0],
     [0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0]
-];
+]);
+
 
 function main() {
     // let current_state = random_state(10, 10);
