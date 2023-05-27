@@ -17,6 +17,24 @@ class Board {
     getelements() {
         return this.elements;
     }
+    // find cell neighbors
+    find_neighbors(i, j) {
+        const neighbors = [];
+        for (let y = i - 1; y <= i + 1; y++) {
+            for (let x = j - 1; x <= j + 1; x++) {
+                if (x === j && y === i) {
+                    continue;
+                }
+                else if (x < 0 || y < 0 || x >= this.getwidth() || y >= this.getheight()) {
+                    neighbors.push(0);
+                }
+                else {
+                    neighbors.push(this.getelements()[y][x]);
+                }
+            }
+        }
+        return neighbors;
+    }
 }
 function blank_state(width, height) {
     const board = [];
@@ -97,31 +115,12 @@ function next_board_state(board) {
         }
         return next_state;
     }
-    function find_neighbors(i, j, board) {
-        const width = board.getwidth();
-        const height = board.getheight();
-        const neighbors = [];
-        for (let y = i - 1; y <= i + 1; y++) {
-            for (let x = j - 1; x <= j + 1; x++) {
-                if (x === j && y === i) {
-                    continue;
-                }
-                else if (x < 0 || y < 0 || x >= width || y >= height) {
-                    neighbors.push(0);
-                }
-                else {
-                    neighbors.push(board.getelements()[y][x]);
-                }
-            }
-        }
-        return neighbors;
-    }
     const width = board.getwidth();
     const height = board.getheight();
     const next_state = blank_state(width, height);
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
-            const neighbors = find_neighbors(i, j, board);
+            const neighbors = board.find_neighbors(i, j);
             // (i-1, j-1), (i-1, j), (i+1, j+1)
             // (i, j-1), (i, j), (i, j+1)
             // (i+1, j-1), (i+1, j), (i+1, j+1)
@@ -150,8 +149,4 @@ function main() {
     }
 }
 main();
-// const b = new Board([[0, 0, 0], [1, 1, 1]]);
-// console.log(b.getwidth())
-// console.log(b.getheight())
-// console.log(b.getelements())
 //# sourceMappingURL=index.js.map
